@@ -7,39 +7,30 @@
 <h1>isok</h1>
 <?php
 
-require_once('./response_line.php');
+$uri = 'https://www.waboxapp.com/api/send/chat'; 
+    $data = [
+        'token' => 'e7549d0dbf698daeef86ef4c5870916c5a07d4bb548c7', //Access Token
+        'uid' => '6282245937150', // Nomor Admin
+        'to' => '6285331436043', // Nomor Penerima
+        'custom_uid' => 'msg-4', // Selalu berubah tiap pesannya
+        'text' => 'TEST'
+    ];
 
-$channelAccessToken = '2xUVyrHQpvfeqo0zkEntrbvaEj8H12gZ/4d5J9lVfhTR0Caif2Ik0xrMFGZdYT0/L4QUfr1M6t42xoKx5ZqqvLs4HsOZrk63UHcT6N9vnFlBYKy3Z9gD3aFte2YTov2U3XwDLBQVt/MV/mJjmfFPFwdB04t89/1O/w1cDnyilFU=';
-$channelSecret = '712cf0062c32aa7cfa14e0a4f25d6084';
-
-$client = new LINEBotTiny($channelAccessToken, $channelSecret);
-$userId     = $client->parseEvents()[0]['source']['userId'];
-$replyToken = $client->parseEvents()[0]['replyToken'];
-$timestamp  = $client->parseEvents()[0]['timestamp'];
-$message    = $client->parseEvents()[0]['message'];
-$messageid  = $client->parseEvents()[0]['message']['id'];
-$profil = $client->profil($userId);
-$pesan_datang = $message['text'];
-
-if($message['type']=='sticker')
-{   
-    $balas = array(
-                            'replyToken' => $replyToken,                                                        
-                            'messages' => array(
-                                array(
-                                        'type' => 'text',                                   
-                                        'text' => 'Terimakasih stikernya... '                                       
-                                    
-                                    )
-                            )
-                        );
-                        
-}
- 
-$result =  json_encode($balas);
-
-file_put_contents('./balasan.json',$result);
-$client->replyMessage($balas);
+    $ch = curl_init(); 
+    curl_setopt($ch, CURLOPT_URL, $uri); 
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); 
+    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false); 
+    curl_setopt($ch, CURLOPT_POST, 1); 
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data); 
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true); 
+    curl_setopt($ch, CURLOPT_MAXREDIRS, 5); 
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); 
+    curl_setopt($ch, CURLOPT_TIMEOUT, 20); 
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 25);
+    $response = json_decode(curl_exec($ch)); // execute curl
+     
+$info = curl_getinfo($ch); 
+curl_close ($ch);
 
 ?>
 </body>
