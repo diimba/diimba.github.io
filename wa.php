@@ -5,7 +5,7 @@ $uri = 'https://www.waboxapp.com/api/send/chat';
         'token' => 'e7549d0dbf698daeef86ef4c5870916c5a07d4bb548c7', //Access Token
         'uid' => '6282245937150', // Nomor Admin
         'to' => '6285331436043', // Nomor Penerima
-        'custom_uid' => 'msg-4', // Selalu berubah tiap pesannya
+        'custom_uid' => 'msg-21', // Selalu berubah tiap pesannya
         'text' => 'TEST'
     ];
 
