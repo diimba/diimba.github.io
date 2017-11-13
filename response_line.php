@@ -77,9 +77,10 @@ class LINEBotTiny
             ),
         ));
         
-        $response = exec_url('https://api.line.me/v2/bot/message/reply',$this->channelAccessToken, json_encode($message))
+        $response = exec_url('https://api.line.me/v2/bot/message/reply',$this->channelAccessToken, json_encode($message));
 
     }
+
     private function sign($body)
     {
         $hash = hash_hmac('sha256', $body, $this->channelSecret, true);
